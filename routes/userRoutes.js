@@ -1,9 +1,9 @@
-const express = require('express');
-const User = require('../models/userModel.js');
+const express = require("express");
+const User = require("../models/userModel.js");
 const router = express.Router();
 
 // Create a new user
-router.post('/users', async (req, res) => {
+router.post("/users", async (req, res) => {
   try {
     const { name, email, age } = req.body;
     const newUser = new User({ name, email, age });
@@ -15,7 +15,7 @@ router.post('/users', async (req, res) => {
 });
 
 // Fetch all users
-router.get('/users', async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);

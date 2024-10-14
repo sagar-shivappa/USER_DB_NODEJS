@@ -1,7 +1,7 @@
 {
-  "name": "gadgetstore",
+  "name": "UserAPI",
   "version": "1.0.0",
-  "description": "App to store gadgets data",
+  "description": "node js app to Insert and retrieve user's data",
   "main": "server.js",
   "scripts": {
     "test": "jest --watchAll=false --testTimeout=10000 --ci --reporters=default --reporters=jest-junit --forceExit",
