@@ -1,5 +1,5 @@
 const express = require("express");
-const userRoutes = require('./routes/userRoutes.js');
+const studentRoute = require("./routes/studentRoutes.js");
 
 const app = express();
 
@@ -11,6 +11,6 @@ app.get("/", (req, res) => {
   res.status(200).json({ alive: "True" });
 });
 
-app.use('/api', userRoutes);
+app.use("/student", studentRoute);
 
 module.exports = app;

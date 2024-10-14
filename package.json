@@ -1,7 +1,7 @@
 {
-  "name": "UserAPI",
+  "name": "Student Report Card",
   "version": "1.0.0",
-  "description": "node js app to Insert and retrieve user's data",
+  "description": "node js app to insert and retrieve student's report card",
   "main": "server.js",
   "scripts": {
     "test": "jest --watchAll=false --testTimeout=10000 --ci --reporters=default --reporters=jest-junit --forceExit",

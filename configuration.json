@@ -1,13 +1,7 @@
 {
   "version": "1.0",
-  "default_open_files": [
-   "routes/userRoutes.js"
-  ],
-  "read_only_files": [
-    "/tests/App.test.js",
-    ".gitignore",
-    "configuration.json"
-  ],
+  "default_open_files": ["routes/studentRoutes.js"],
+  "read_only_files": ["/tests/App.test.js", ".gitignore", "configuration.json"],
   "buttons": {
     "Install Packages": {
       "command": "npm install"

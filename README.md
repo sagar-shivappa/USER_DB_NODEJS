@@ -1,43 +1,48 @@
-# NodeJS: User Management API
+# NodeJS: Student's Record Management API
 
 ## Project Overview
 
-This project outlines the development of a RESTful API using Express.js and MongoDB to manage user data. The API allows users to be created and retrieved from a MongoDB database.
+This project outlines the development of a RESTful API using Express.js and MongoDB to manage students data. The API allows student records to be created and retrieved from a MongoDB database.
 
 ## Project Goal
 
 The goal is to create a simple and efficient API that allows the client to:
 
-- Add new users to the system.
-- Retrieve a list of all users.
+- Add new student's marks record to the system.
+- Retrieve the student's record using student id.
 
 ## Provided Components
 
-- **User Model (`models/userModel.js`)**: This file defines the Mongoose schema for the User model, including properties like `name`, `email`, and `age`.
+- **ScoreCard Model (`models/scoreCardModel.js`)**: This file defines the Mongoose schema for the ScoreCrad model, including properties like `studentName`, `studentID`,`standard` and `marks`.
 - **Express.js Application**: A basic Express.js application structure is provided, including essential dependencies and project setup.
 
 > Note: You are not required to modify any existing code outside the `routes` folder.
 
 ## Implementation Tasks
 
-### [routes/userRoutes.js](routes/userRoutes.js):
+### [routes/studentRoutes.js](routes/studentRoutes.js):
 
 Define routes and add logic for the following API endpoints:
 
-- **`/users`**:
-  - **GET**: Retrieves all users from the MongoDB collection.
-  - **POST**: Creates a new user and adds them to the MongoDB collection based on data from request body.
+- **`/student`**:
+  - **GET**: Retrieves student's record from the MongoDB collection using student id.
+  - **POST**: Creates a new student record and adds them to the MongoDB collection based on data from request body.
 
 ## API Endpoints
 
-### 1. Create a New User (`POST /api/users`)
+### 1. Create a New User (`POST /student/addRecord`)
 
 - **Request Body**:
   ```json
   {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "age": 30
+    "studentName": "Sundar",
+    "studentID": 3,
+    "standard": "2nd",
+    "marks": {
+      "english": 24,
+      "science": 23,
+      "mathematics": 30
+    }
   }
   ```
 - **Response** (on success):
@@ -45,11 +50,7 @@ Define routes and add logic for the following API endpoints:
   - Example Body:
     ```json
     {
-      "_id": "60c72b2f7a833e4f8c0b9b91",
-      "name": "John Doe",
-      "email": "john@example.com",
-      "age": 30,
-      "__v": 0
+      "message": "Created Student Report"
     }
     ```
 - **Response** (on failure):
@@ -59,29 +60,36 @@ Define routes and add logic for the following API endpoints:
     { "message": err.message }
     ```
 
-### 2. Get All Users (`GET /api/users`)
+### 2. Get student record (`GET /student/getRecord/:studentID`)
+
+Should pass the valid student id as the query parameter
 
 - **Response** (on success):
   - Status Code: `200 OK`
   - Example Body:
     ```json
-    [
-      {
-        "_id": "60c72b2f7a833e4f8c0b9b91",
-        "name": "John Doe",
-        "email": "john@example.com",
-        "age": 30,
-        "__v": 0
+    {
+      "studentName": "Sundar",
+      "studentID": 3,
+      "standard": "2nd",
+      "marks": {
+        "english": 24,
+        "science": 23,
+        "mathematics": 30
       },
-      {
-        "_id": "60c72b2f7a833e4f8c0b9b92",
-        "name": "Jane Doe",
-        "email": "jane@example.com",
-        "age": 25,
-        "__v": 0
-      }
-    ]
+      "_id": "670d12422a5013158371deb7",
+      "__v": 0
+    }
     ```
+- **Response** (on **Invalid** student id):
+
+  - Status Code: `404 Not Found`
+  - Body:
+
+    ```json
+    { "message": "Invalid Student ID" }
+    ```
+
 - **Response** (on failure):
   - Status Code: `500 Internal Server Error`
   - Body:

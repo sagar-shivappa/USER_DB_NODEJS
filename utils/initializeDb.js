@@ -1,25 +1,35 @@
-const User = require("../models/userModel");
+const ScoreCard = require("../models/scoreCardModel");
 
 const initializeDB = async () => {
-  const users = await User.find();
-  if (users.length != 0) {
+  const scoreCard = await ScoreCard.find();
+  if (scoreCard.length != 0) {
     return;
   }
-  const usersArray = [
+  const studentsArray = [
     {
-      name: "John Doe",
-      email: "john@example.com",
-      age: 30,
+      studentName: "John Doe M",
+      studentID: 1,
+      standard: "2nd",
+      marks: {
+        english: 24,
+        science: 23,
+        mathematics: 30,
+      },
     },
     {
-      name: "Jane Doe",
-      email: "jane@example.com",
-      age: 25,
+      studentName: "Mahesh",
+      studentID: 2,
+      standard: "2nd",
+      marks: {
+        english: 14,
+        science: 13,
+        mathematics: 20,
+      },
     },
   ];
-  usersArray.forEach(async (e) => {
-    let newUser = new User(e);
-    await newUser.save();
+  studentsArray.forEach(async (e) => {
+    let newReport = new ScoreCard(e);
+    await newReport.save();
   });
 };
 

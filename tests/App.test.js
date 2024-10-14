@@ -2,7 +2,7 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("../app");
-const User = require("../models/userModel.js");
+const ScoreCard = require("../models/scoreCardModel.js");
 
 let mongoServer;
 
@@ -23,52 +23,76 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  await User.deleteMany(); // Clear the database between tests
+  await ScoreCard.deleteMany(); // Clear the database between tests
 });
 
-describe("User API", () => {
-  it("should create a new user", async () => {
-    const newUser = { name: "John Doe", email: "john@example.com", age: 30 };
-    const res = await request(app).post("/api/users").send(newUser);
+describe("Student Report Card API", () => {
+  it("should create a new Report Card", async () => {
+    const newReportCard = {
+      studentName: "Sundar",
+      studentID: 4,
+      standard: "2nd",
+      marks: {
+        english: 24,
+        science: 23,
+        mathematics: 30,
+      },
+    };
+    const res = await request(app)
+      .post("/student/addReport")
+      .send(newReportCard);
     expect(res.statusCode).toBe(201);
-    expect(res.body.name).toBe("John Doe");
-    expect(res.body.email).toBe("john@example.com");
-    expect(res.body.age).toBe(30);
+    expect(res.body.message).toBe("Created Student Report");
   });
 
-  it("should throw 400 error when adding a new user", async () => {
-    const newUser = { name: "John Doe", email: "john@example.com" };
-    const res = await request(app).post("/api/users").send(newUser);
+  it("should throw error for invalid request", async () => {
+    const newReportCard = {
+      studentName: "Sundar",
+      studentID: 4,
+      standard: "2nd",
+    };
+    const res = await request(app)
+      .post("/student/addReport")
+      .send(newReportCard);
     expect(res.statusCode).toBe(400);
-    // expect(res.body.name).toBe('John Doe');
-    // expect(res.body.email).toBe('john@example.com');
-    // expect(res.body.age).toBe(30);
   });
 
-  it("should fetch all users", async () => {
-    const user1 = new User({
-      name: "John Doe",
-      email: "john@example.com",
-      age: 30,
+  it("should fetch student report card using valid student ID", async () => {
+    const studentCard = new ScoreCard({
+      studentName: "Sundar",
+      studentID: 5,
+      standard: "2nd",
+      marks: {
+        english: 24,
+        science: 23,
+        mathematics: 30,
+      },
     });
-    const user2 = new User({
-      name: "Jane Doe",
-      email: "jane@example.com",
-      age: 25,
-    });
-    await user1.save();
-    await user2.save();
 
-    const res = await request(app).get("/api/users");
+    await studentCard.save();
+
+    const res = await request(app).get("/student/getScore/5");
     expect(res.statusCode).toBe(200);
-    expect(res.body.length).toBe(2);
-    expect(res.body[0].name).toBe("John Doe");
-    expect(res.body[1].name).toBe("Jane Doe");
+    expect(res.body.studentName).toBe("Sundar");
+    expect(res.body.standard).toBe("2nd");
   });
 
-  it("should not create a user with invalid data", async () => {
-    const invalidUser = { name: "", email: "invalidemail", age: -5 };
-    const res = await request(app).post("/api/users").send(invalidUser);
-    expect(res.statusCode).toBe(400);
+  it("should fetch student report card using valid student ID", async () => {
+    const studentCard = new ScoreCard({
+      studentName: "Sundar",
+      studentID: 5,
+      standard: "2nd",
+      marks: {
+        english: 24,
+        science: 23,
+        mathematics: 30,
+      },
+    });
+
+    await studentCard.save();
+
+    const res = await request(app).get("/student/getScore/55");
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe("Invalid Student ID");
   });
 });
