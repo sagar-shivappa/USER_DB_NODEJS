@@ -47,6 +47,7 @@ Define routes and add logic for the following API endpoints:
 ### 1. Create a New User (`POST /student/addRecord`)
 
 - **Request Body**:
+
   ```json
   {
     "studentName": "Sundar",
@@ -59,8 +60,6 @@ Define routes and add logic for the following API endpoints:
     }
   }
   ```
-
-````
 
 - **Response** (on success):
   - Status Code: `201 Created`
@@ -158,4 +157,7 @@ This will run the test cases in the terminal.
 - Node Version: 14.21.3
 - MongoDB Version: 7.0.3
 - Default Port: 8000
-````
+
+```
+
+```
