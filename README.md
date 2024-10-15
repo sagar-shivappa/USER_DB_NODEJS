@@ -141,5 +141,3 @@ This will run the test cases in the terminal.
 - Node Version: 14.21.3
 - MongoDB Version: 7.0.3
 - Default Port: 8000
-
-# USER_DB_NODEJS
