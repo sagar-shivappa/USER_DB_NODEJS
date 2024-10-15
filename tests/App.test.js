@@ -71,13 +71,13 @@ describe("Student Report Card API", () => {
 
     await studentCard.save();
 
-    const res = await request(app).get("/student/getScore/5");
+    const res = await request(app).get("/student/getRecord/5");
     expect(res.statusCode).toBe(200);
     expect(res.body.studentName).toBe("Sundar");
     expect(res.body.standard).toBe("2nd");
   });
 
-  it("should fetch student report card using valid student ID", async () => {
+  it("should report invalid student id for wrong student id", async () => {
     const studentCard = new ScoreCard({
       studentName: "Sundar",
       studentID: 5,
@@ -91,7 +91,7 @@ describe("Student Report Card API", () => {
 
     await studentCard.save();
 
-    const res = await request(app).get("/student/getScore/55");
+    const res = await request(app).get("/student/getRecord/55");
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toBe("Invalid Student ID");
   });

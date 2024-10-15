@@ -1,5 +1,5 @@
 {
-  "name": "Student Report Card",
+  "name": "StudentReportCard",
   "version": "1.0.0",
   "description": "node js app to insert and retrieve student's report card",
   "main": "server.js",
