@@ -24,9 +24,23 @@ The goal is to create a simple and efficient API that allows the client to:
 
 Define routes and add logic for the following API endpoints:
 
-- **`/student`**:
-  - **GET**: Retrieves student's record from the MongoDB collection using student id.
+- **`/student/addRecord`**:
+
   - **POST**: Creates a new student record and adds them to the MongoDB collection based on data from request body.
+  - Create the request body as per the **ScoreCard Model (`models/scoreCardModel.js`)**
+  - Response should be sent in the json format.
+  - If any error occurs while adding the record, return the error message with 400 status code
+
+- **`/student/getRecord/:studentID`**:
+  - **GET**: Retrieves student's record from the MongoDB collection using student id.
+  - Pass a valid **studentID** available in the DB.
+  - Incase of invalid **studentID**, return a message as below with 404 status code
+    ```bash
+    {
+      message: "Invalid Student ID"
+    }
+    ```
+  - If any error occurs while getting the Record, return the error message with 500 status code
 
 ## API Endpoints
 
@@ -45,6 +59,9 @@ Define routes and add logic for the following API endpoints:
     }
   }
   ```
+
+````
+
 - **Response** (on success):
   - Status Code: `201 Created`
   - Example Body:
@@ -141,3 +158,4 @@ This will run the test cases in the terminal.
 - Node Version: 14.21.3
 - MongoDB Version: 7.0.3
 - Default Port: 8000
+````
