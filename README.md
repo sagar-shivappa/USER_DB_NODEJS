@@ -1,116 +1,70 @@
-# NodeJS: Student's Record Management API
+# NodeJS: Middleware in Express JS
 
 ## Project Overview
 
-This project outlines the development of a RESTful API using Express.js and MongoDB to manage students data. The API allows student records to be created and retrieved from a MongoDB database.
+This project outlines the need and the usage of the middleware function used the express js projects.
 
 ## Project Goal
 
-The goal is to create a simple and efficient API that allows the client to:
+The goal is to create a simple and efficient Middleware functions:
 
-- Add new student's marks record to the system.
-- Retrieve the student's record using student id.
+- To log all the request methods and request path for the API end point.
+- To handle the error handling functionality at the Global Error handling level.
 
 ## Provided Components
 
-- **ScoreCard Model (`models/scoreCardModel.js`)**: This file defines the Mongoose schema for the ScoreCrad model, including properties like `studentName`, `studentID`,`standard` and `marks`.
+- **studentRoutes (`routes/studentRoutes.js`)**: This file defines the existing end points `/student/getRecord` and `/student/error`, these end point are already functional.
 - **Express.js Application**: A basic Express.js application structure is provided, including essential dependencies and project setup.
 
-> Note: You are not required to modify any existing code outside the `routes` folder.
+> Note: You are not required to modify any existing code outside the `middleware` folder and `app.js` file.
 
 ## Implementation Tasks
 
-### [routes/studentRoutes.js](routes/studentRoutes.js):
+### [middleware/logger.js](middleware/logger.js):
 
-Define routes and add logic for the following API endpoints:
+- Complete the middleware functionality to log the request method and request path
+- Add the `next()` function to make the control pass over the middleware function.
 
-- **`/student/addRecord`**:
+### [middleware/error.handler.js](middleware/error.handler.js):
 
-  - **POST**: Creates a new student record and adds them to the MongoDB collection based on data from request body.
-  - Create the request body as per the **ScoreCard Model (`models/scoreCardModel.js`)**
-  - Response should be sent in the json format.
-  - If any error occurs while adding the record, return the error message with 400 status code
-
-- **`/student/getRecord/:studentID`**:
-  - **GET**: Retrieves student's record from the MongoDB collection using student id.
-  - Pass a valid **studentID** available in the DB.
-  - Incase of invalid **studentID**, return a message as below with 404 status code
-    ```bash
-    {
-      message: "Invalid Student ID"
-    }
-    ```
-  - If any error occurs while getting the Record, return the error message with 500 status code
-
-## API Endpoints
-
-### 1. Create a New User (`POST /student/addRecord`)
-
-- **Request Body**:
+- Complete the middleware functionality to set the response status and response message as a part of error handling
+- **Sample response**:
 
   ```json
   {
-    "studentName": "Sundar",
-    "studentID": 3,
-    "standard": "2nd",
-    "marks": {
-      "english": 24,
-      "science": 23,
-      "mathematics": 30
-    }
+    "status": "error",
+    "message": err.message || "Internal Server Error",
   }
   ```
 
-- **Response** (on success):
-  - Status Code: `201 Created`
-  - Example Body:
-    ```json
-    {
-      "message": "Created Student Report"
-    }
-    ```
-- **Response** (on failure):
-  - Status Code: `400 Bad Request`
-  - Body:
-    ```json
-    { "message": err.message }
-    ```
+- Add the `next()` function to make the control pass over the middleware function.
 
-### 2. Get student record (`GET /student/getRecord/:studentID`)
+### [app.js](app.js):
 
-Should pass the valid student id as the query parameter
+- Add the imported middleware functions at the right position
+
+## API Endpoints
+
+### 1. Get student record (`GET /student/getRecord`)
 
 - **Response** (on success):
   - Status Code: `200 OK`
   - Example Body:
     ```json
-    {
-      "studentName": "Sundar",
-      "studentID": 3,
-      "standard": "2nd",
-      "marks": {
-        "english": 24,
-        "science": 23,
-        "mathematics": 30
-      },
-      "_id": "670d12422a5013158371deb7",
-      "__v": 0
-    }
-    ```
-- **Response** (on **Invalid** student id):
-
-  - Status Code: `404 Not Found`
-  - Body:
-
-    ```json
-    { "message": "Invalid Student ID" }
-    ```
-
-- **Response** (on failure):
-  - Status Code: `500 Internal Server Error`
-  - Body:
-    ```json
-    { "message": err.message }
+    [
+      {
+        "studentName": "Sundar",
+        "studentID": 3,
+        "standard": "2nd",
+        "marks": {
+          "english": 24,
+          "science": 23,
+          "mathematics": 30
+        },
+        "_id": "670d12422a5013158371deb7",
+        "__v": 0
+      }
+    ]
     ```
 
 ## Commands
@@ -157,7 +111,3 @@ This will run the test cases in the terminal.
 - Node Version: 14.21.3
 - MongoDB Version: 7.0.3
 - Default Port: 8000
-
-```
-
-```

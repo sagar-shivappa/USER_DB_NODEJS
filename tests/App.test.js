@@ -26,38 +26,8 @@ afterEach(async () => {
   await ScoreCard.deleteMany(); // Clear the database between tests
 });
 
-describe("Student Report Card API", () => {
-  it("should create a new Report Card", async () => {
-    const newReportCard = {
-      studentName: "Sundar",
-      studentID: 4,
-      standard: "2nd",
-      marks: {
-        english: 24,
-        science: 23,
-        mathematics: 30,
-      },
-    };
-    const res = await request(app)
-      .post("/student/addReport")
-      .send(newReportCard);
-    expect(res.statusCode).toBe(201);
-    expect(res.body.message).toBe("Created Student Report");
-  });
-
-  it("should throw error for invalid request", async () => {
-    const newReportCard = {
-      studentName: "Sundar",
-      studentID: 4,
-      standard: "2nd",
-    };
-    const res = await request(app)
-      .post("/student/addReport")
-      .send(newReportCard);
-    expect(res.statusCode).toBe(400);
-  });
-
-  it("should fetch student report card using valid student ID", async () => {
+describe("Logger Middleware", () => {
+  it("should fetch student report card check for method in middleware", async () => {
     const studentCard = new ScoreCard({
       studentName: "Sundar",
       studentID: 5,
@@ -70,14 +40,12 @@ describe("Student Report Card API", () => {
     });
 
     await studentCard.save();
+    const logSpy = jest.spyOn(global.console, "log");
 
-    const res = await request(app).get("/student/getRecord/5");
-    expect(res.statusCode).toBe(200);
-    expect(res.body.studentName).toBe("Sundar");
-    expect(res.body.standard).toBe("2nd");
+    const res = await request(app).get("/student/getRecord");
+    expect(logSpy).toHaveBeenCalledWith("GET");
   });
-
-  it("should report invalid student id for wrong student id", async () => {
+  it("should fetch student report card check for request path middleware", async () => {
     const studentCard = new ScoreCard({
       studentName: "Sundar",
       studentID: 5,
@@ -90,9 +58,26 @@ describe("Student Report Card API", () => {
     });
 
     await studentCard.save();
+    const logSpy = jest.spyOn(global.console, "log");
 
-    const res = await request(app).get("/student/getRecord/55");
-    expect(res.statusCode).toBe(404);
-    expect(res.body.message).toBe("Invalid Student ID");
+    const res = await request(app).get("/student/getRecord");
+
+    expect(logSpy).toHaveBeenCalledWith("/student/getRecord");
+  });
+});
+
+describe("Error Handling Middleware", () => {
+  it("should handle error thrown while fetching students records", async () => {
+    const response = await request(app).get("/student/error");
+
+    expect(response.body).toEqual({
+      status: "error",
+      message: "This is an intentional error!",
+    });
+  });
+
+  it("should handle error thrown while fetching students records with the ERROR code", async () => {
+    const response = await request(app).get("/student/error");
+    expect(response.status).toBe(500);
   });
 });
