@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json());
 
 // Add the logger middleware
-app.use(logger);
 
 /* This is the root route. It is used to check if the server is running. */
 app.get("/", (req, res) => {
@@ -19,6 +18,5 @@ app.get("/", (req, res) => {
 app.use("/student", studentRoute);
 
 //Add error handler middleware
-app.use(Errorhandler);
 
 module.exports = app;

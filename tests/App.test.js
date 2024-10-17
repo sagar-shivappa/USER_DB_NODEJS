@@ -78,6 +78,6 @@ describe("Error Handling Middleware", () => {
 
   it("should handle error thrown while fetching students records with the ERROR code", async () => {
     const response = await request(app).get("/student/error");
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(501);
   });
 });

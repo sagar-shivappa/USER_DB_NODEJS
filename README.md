@@ -27,8 +27,8 @@ The goal is to create a simple and efficient Middleware functions:
 
 ### [middleware/error.handler.js](middleware/error.handler.js):
 
-- Complete the middleware functionality to set the response status and response message as a part of error handling
-- **Sample response**:
+- Complete the middleware functionality to set the response status to `501` and send the response as below
+- **Sample response message**:
 
   ```json
   {
