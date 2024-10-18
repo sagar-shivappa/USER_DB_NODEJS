@@ -2,14 +2,14 @@
 
 ## Project Overview
 
-This project outlines the need and the usage of the middleware function used the express js projects.
+This project outlines the need and the importance of the middleware function in the express js projects.
 
 ## Project Goal
 
 The goal is to create a simple and efficient Middleware functions:
 
 - To log all the request methods and request path for the API end point.
-- To handle the error handling functionality at the Global Error handling level.
+- To implement the error handling function for the entire project .
 
 ## Provided Components
 
@@ -41,9 +41,11 @@ The goal is to create a simple and efficient Middleware functions:
 
 ### [app.js](app.js):
 
-- Add the imported middleware functions at the right position
+- Add the imported middleware functions at the right positions.
 
 ## API Endpoints
+
+> Note: `/student/getRecord` and `/student/error`, end points are already functional, no need to modify.
 
 ### 1. Get student record (`GET /student/getRecord`)
 
@@ -66,6 +68,11 @@ The goal is to create a simple and efficient Middleware functions:
       }
     ]
     ```
+
+### 2. Error Scenario (`GET /student/error`)
+
+- Throws the error with a message `This is an intentional error!`
+- This error is passed on using `next()`
 
 ## Commands
 
